@@ -189,3 +189,4 @@ if (player.averageGrade < 3) {
   nextYearBtn.disabled = true;
   return;
 }
+document.getElementById("stat-month").textContent = player.month;)
