@@ -14,11 +14,17 @@ let player = {
   happiness: 50,       // %
   friends: 50,         // %
   money: 0             // EUR
+};
+
 const statName = document.getElementById("stat-name");
 const statAge = document.getElementById("stat-age");
 const statMoney = document.getElementById("stat-money");
 const statHealth = document.getElementById("stat-health");
 const statHappiness = document.getElementById("stat-happiness");
+const statGrade = document.getElementById("stat-grade");
+const statSleep = document.getElementById("stat-sleep");
+const statFriends = document.getElementById("stat-friends");
+const statMonth = document.getElementById("stat-month");
 
 const eventText = document.getElementById("event-text");
 const choicesDiv = document.getElementById("choices");
@@ -27,12 +33,8 @@ const startBtn = document.getElementById("start-btn");
 const nextYearBtn = document.getElementById("next-year-btn");
 
 // Vienkāršs notikumu saraksts
-const events = [
-  // 20% iespēja kontroldarbam
-if (Math.random() < 0.4) {
-    triggerRandomTest();
-    return;
-}
+const events = [];
+
 function triggerRandomTest() {
     const subjects = ["ķīmijas", "fizikas", "matemātikas"];
     const subject = subjects[Math.floor(Math.random() * subjects.length)];
@@ -82,7 +84,10 @@ function triggerRandomTest() {
         choicesDiv.appendChild(btn);
     });
 }
-];
+
+function endTestEvent() {
+    choicesDiv.innerHTML = "Kontroldarbs pabeigts. Spied 'Nākamais gads'.";
+}
 
 // Atjauno stat parādīšanu
 function updateStats() {
@@ -91,6 +96,10 @@ function updateStats() {
   statMoney.textContent = player.money;
   statHealth.textContent = player.health;
   statHappiness.textContent = player.happiness;
+  statGrade.textContent = player.averageGrade.toFixed(2);
+  statSleep.textContent = player.sleep;
+  statFriends.textContent = player.friends;
+  statMonth.textContent = player.month;
 }
 
 // Ģenerē notikumu pēc vecuma
@@ -128,13 +137,12 @@ function showEvent() {
 
 // Sākt spēli
 startBtn.addEventListener("click", () => {
-  const player.name = prompt("Ievadi savu vārdu:");
-player.surname = prompt("Ievadi savu uzvārdu:");
-player.gender = prompt("Dzimums (vīrietis/sieviete):");
+  player.name = prompt("Ievadi savu vārdu:");
+  player.surname = prompt("Ievadi savu uzvārdu:");
+  player.gender = prompt("Dzimums (vīrietis/sieviete):");
 
-player.birthdayDay = parseInt(prompt("Dzimšanas diena (1–31):"));
-player.birthdayMonth = parseInt(prompt("Dzimšanas mēnesis (1–12):"));;
-  if (name) player.name = name;
+  player.birthdayDay = parseInt(prompt("Dzimšanas diena (1–31):"));
+  player.birthdayMonth = parseInt(prompt("Dzimšanas mēnesis (1–12):"));
 
   player.age = 0;
   player.money = 0;
@@ -151,42 +159,33 @@ player.birthdayMonth = parseInt(prompt("Dzimšanas mēnesis (1–12):"));;
 // Nākamais menesis
 nextYearBtn.addEventListener("click", () => {
   player.month++;
-// Kabatas nauda
-player.money += 50;
-if (player.month > 12) {
-  player.month = 1;
-  player.age++;
-};
+  // Kabatas nauda
+  player.money += 50;
+  if (player.month > 12) {
+    player.month = 1;
+    player.age++;
+  }
+  
   if (player.month === player.birthdayMonth) {
-  eventText.textContent = "Šomēnes tev ir dzimšanas diena!";
-  player.happiness += 10;
+    eventText.textContent = "Šomēnes tev ir dzimšanas diena!";
+    player.happiness += 10;
     player.money += 70;
-}
-  //  “game over” 
-  if (player.age 19 || player.health <= 0) {
-    eventText.textContent = "Tavs laiks JEPVĢ ir beidzies! Vecums:  + player.age;
+  }
+
+  // "game over" 
+  if (player.age >= 19 || player.health <= 0) {
+    eventText.textContent = "Tavs laiks JEPVĢ ir beidzies! Vecums: " + player.age;
     choicesDiv.innerHTML = "";
     nextYearBtn.disabled = true;
     return;
   }
-  if (player.month === player.birthdayMonth) {
-  eventText.textContent = "Šomēnes tev ir dzimšanas diena!";
-  player.happiness += 10;
-}
-  showEvent();
 
+  if (player.averageGrade < 3) {
+    alert("Tava vidējā atzīme ir zem 3. Tevi izmet no JEPVĢ. Spēle beigusies.");
+    nextYearBtn.disabled = true;
+    return;
+  }
+
+  showEvent();
   updateStats();
 });
-
-// sākotnējais stat update
-updateStats(document.getElementById("stat-grade").textContent = player.averageGrade.toFixed(2);
-document.getElementById("stat-sleep").textContent = player.sleep;
-document.getElementById("stat-friends").textContent = player.friends;
-document.getElementById("stat-money").textContent = player.money;
-);
-if (player.averageGrade < 3) {
-  alert("Tava vidējā atzīme ir zem 3. Tevi izmet no JEPVĢ. Spēle beigusies.");
-  nextYearBtn.disabled = true;
-  return;
-}
-document.getElementById("stat-month").textContent = player.month;)
