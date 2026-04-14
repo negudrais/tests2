@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html lang="lv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>JEPVĢ simulator</title>
+  <meta charset="UTF-8">
+  <title>JEPVĢ Simulator (prototips)</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="game-container">
+    <h1>JEPVĢ Simulator</h1>
+<p><strong>Mēnesis:</strong> <span id="stat-month"></span></p>
+    <div class="stats">
+      <p><strong>Vārds:</strong> <span id="stat-name"></span></p>
+      <p><strong>Vecums:</strong> <span id="stat-age"></span></p>
+      <p><strong>Nauda:</strong> <span id="stat-money"></span> €</p>
+      <p><strong>Veselība:</strong> <span id="stat-health"></span></p>
+      <p><strong>Laime:</strong> <span id="stat-happiness"></span></p>
+    </div>
 
+    <div class="event-box">
+      <p id="event-text">Nospiediet "Sākt dzīvi", lai sāktu!</p>
+      <div id="choices"></div>
+    </div>
+
+    <button id="start-btn">Sākt dzīvi</button>
+    <button id="next-year-btn" disabled>Nākamais gads</button>
+  </div>
+
+  <script src="game.js"></script>
 </body>
 </html>
